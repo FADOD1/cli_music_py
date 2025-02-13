@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 
 
 class Playable(ABC):
-    """Interface para classes que podem ser reproduzidas."""
+    """Interface para classes"""
     
     @abstractmethod
     def play(self):
@@ -20,6 +20,9 @@ class Playable(ABC):
     def stop(self):
         pass
 
+    #@abstractmethod
+    #def queue(self):
+        #pass
 
 class Song:
     """Representa uma música."""
@@ -96,6 +99,11 @@ class MusicPlayer(Playable):
         self.start_time = None
         self.playing = False
 
+        """queue para tocar as musicas automaticamente"""
+
+    #def queue(self):
+
+
     def next_song(self):
         """Avança para a próxima música."""
         self.stop()
@@ -145,20 +153,20 @@ def main(stdscr):
     while True:
         stdscr.clear()
         stdscr.addstr(0, 2, "🎵 CLI Music Player 🎵", curses.A_BOLD)
-        stdscr.addstr(2, 2, "Use ↑/↓ para navegar | Enter para tocar | Espaço para pausar | q para sair")
+        stdscr.addstr(2, 2, "Use ↑/↓ para navegar | Enter para tocar | Espaço para pausar | q para sair | < / > proximo / anterior")
 
         # Lista de músicas
         for i, song in enumerate(player.library.get_songs()):
             if i == index:
-                stdscr.addstr(4 + i, 2, f"> {song.name}", curses.A_REVERSE)
+                stdscr.addstr(4 + i, 2, f"👉 {song.name}", curses.A_REVERSE)
             else:
                 stdscr.addstr(4 + i, 2, f"  {song.name}")
 
         # Informações do player
         elapsed = player.format_time(player.get_elapsed_time())
         stdscr.addstr(15, 2, f"Status: {'▶ Tocando' if player.playing else '⏸ Pausado'}")
-        stdscr.addstr(16, 2, f"Volume: {'█' * int(player.volume * 10)}")
-        stdscr.addstr(17, 2, f"Tempo: {elapsed}")
+        stdscr.addstr(16, 2, f"Volume -/+: {'█' * int(player.volume * 10)}")
+        stdscr.addstr(17, 2, f"Tempo ⏳: {elapsed}")
 
         stdscr.refresh()
 
