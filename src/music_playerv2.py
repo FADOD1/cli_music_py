@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 
 class Playable(ABC):
     """Interface para classes"""
-    
+
     @abstractmethod
     def play(self):
         pass
@@ -20,9 +20,6 @@ class Playable(ABC):
     def stop(self):
         pass
 
-    #@abstractmethod
-    #def queue(self):
-        #pass
 
 class Song:
     """Representa uma música."""
@@ -54,7 +51,7 @@ class MusicLibrary:
 
 class MusicPlayer(Playable):
     """Gerencia a reprodução de músicas, usando composição com MusicLibrary."""
-    
+
     def __init__(self):
         pygame.mixer.init()
         self.library = MusicLibrary()
@@ -63,22 +60,34 @@ class MusicPlayer(Playable):
         self.volume = 0.5
         self.start_time = None
         self.elapsed_time = 0
+        self.queue = []  # Initialize the queue
 
     def play(self, index=None):
         """Reproduz uma música."""
         if index is not None:
             self.current_index = index
 
-        if self.library.songs:
-            song = self.library.songs[self.current_index]
-            try:
-                pygame.mixer.music.load(song.path)
-                pygame.mixer.music.set_volume(self.volume)
-                pygame.mixer.music.play()
-                self.start_time = time.time()
-                self.playing = True
-            except pygame.error as e:
-                print(f"Erro ao carregar a música: {e}")
+        if self.queue:
+            song = self.queue.pop(0)  # Get the next song from the queue
+        else:
+            if self.library.songs:
+                song = self.library.songs[self.current_index]
+            else:
+                return
+
+        try:
+            pygame.mixer.music.load(song.path)
+            pygame.mixer.music.set_volume(self.volume)
+            pygame.mixer.music.play()
+            self.start_time = time.time()
+            self.playing = True
+        except pygame.error as e:
+            print(f"Erro ao carregar a música: {e}")
+
+    def add_to_queue(self, song_index):
+        """Adiciona uma música à fila."""
+        if 0 <= song_index < len(self.library.songs):
+            self.queue.append(self.library.songs[song_index])
 
     def pause(self):
         """Pausa ou retoma a música."""
@@ -99,16 +108,14 @@ class MusicPlayer(Playable):
         self.start_time = None
         self.playing = False
 
-        """queue para tocar as musicas automaticamente"""
-
-    #def queue(self):
-
-
     def next_song(self):
         """Avança para a próxima música."""
         self.stop()
-        self.current_index = (self.current_index + 1) % len(self.library.songs)
-        self.play()
+        if self.queue:
+            self.play()
+        else:
+            self.current_index = (self.current_index + 1) % len(self.library.songs)
+            self.play()
 
     def previous_song(self):
         """Volta para a música anterior."""
@@ -146,7 +153,7 @@ def main(stdscr):
     curses.curs_set(0)
     stdscr.nodelay(True)
     stdscr.timeout(100)
-    
+
     index = 0
     player.play(index)
 
@@ -187,11 +194,10 @@ def main(stdscr):
             player.change_volume(True)
         elif key == ord('-'):
             player.change_volume(False)
-        elif key == curses.KEY_RIGHT: # >
+        elif key == curses.KEY_RIGHT:  # >
             player.next_song()
-        elif key == curses.KEY_LEFT: # <
+        elif key == curses.KEY_LEFT:  # <
             player.previous_song()
-
 
 if __name__ == "__main__":
     curses.wrapper(main)
