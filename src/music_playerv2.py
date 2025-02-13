@@ -46,6 +46,7 @@ class MusicLibrary:
         return songs
 
     def get_songs(self):
+        """Retorna a lista de músicas carregadas."""
         return self.songs
 
 
@@ -53,6 +54,9 @@ class MusicPlayer(Playable):
     """Gerencia a reprodução de músicas, usando composição com MusicLibrary."""
 
     def __init__(self):
+        """
+        Inicializa o MusicPlayer.
+        """
         pygame.mixer.init()
         self.library = MusicLibrary()
         self.current_index = 0
@@ -63,7 +67,12 @@ class MusicPlayer(Playable):
         self.queue = []  # Initialize the queue
 
     def play(self, index=None):
-        """Reproduz uma música."""
+        """
+        Reproduz uma música.
+        
+        Parâmetros:
+        index (int, opcional): O índice da música a ser reproduzida. Se None, reproduz a música atual.
+        """
         if index is not None:
             self.current_index = index
 
@@ -85,12 +94,19 @@ class MusicPlayer(Playable):
             print(f"Erro ao carregar a música: {e}")
 
     def add_to_queue(self, song_index):
-        """Adiciona uma música à fila."""
+        """
+        Adiciona uma música à fila.
+        
+        Parâmetros:
+        song_index (int): O índice da música a ser adicionada à fila.
+        """
         if 0 <= song_index < len(self.library.songs):
             self.queue.append(self.library.songs[song_index])
 
     def pause(self):
-        """Pausa ou retoma a música."""
+        """
+        Pausa ou retoma a música.
+        """
         if self.playing:
             pygame.mixer.music.pause()
             self.elapsed_time += time.time() - self.start_time
@@ -102,14 +118,18 @@ class MusicPlayer(Playable):
             self.playing = True
 
     def stop(self):
-        """Para a música."""
+        """
+        Para a música.
+        """
         pygame.mixer.music.stop()
         self.elapsed_time = 0
         self.start_time = None
         self.playing = False
 
     def next_song(self):
-        """Avança para a próxima música."""
+        """
+        Avança para a próxima música.
+        """
         self.stop()
         if self.queue:
             self.play()
@@ -118,30 +138,55 @@ class MusicPlayer(Playable):
             self.play()
 
     def previous_song(self):
-        """Volta para a música anterior."""
+        """
+        Volta para a música anterior.
+        """
         self.stop()
         self.current_index = (self.current_index - 1) % len(self.library.songs)
         self.play()
 
     def change_volume(self, increase=True):
-        """Ajusta o volume."""
+        """
+        Ajusta o volume.
+        
+        Parâmetros:
+        increase (bool): Se True, aumenta o volume. Se False, diminui o volume.
+        """
         self.volume = min(1.0, self.volume + 0.1) if increase else max(0.0, self.volume - 0.1)
         pygame.mixer.music.set_volume(self.volume)
 
     def get_elapsed_time(self):
-        """Retorna o tempo decorrido."""
+        """
+        Retorna o tempo decorrido.
+        
+        Retorna:
+        float: Tempo decorrido em segundos.
+        """
         if self.start_time is None:
             return self.elapsed_time
         return self.elapsed_time + (time.time() - self.start_time if self.playing else 0)
 
     @staticmethod
     def format_time(seconds):
-        """Método estático para formatar tempo."""
+        """
+        Método estático para formatar tempo.
+        
+        Parâmetros:
+        seconds (float): Tempo em segundos.
+        
+        Retorna:
+        str: Tempo formatado no formato MM:SS.
+        """
         return time.strftime('%M:%S', time.gmtime(seconds))
 
 
 def main(stdscr):
-    """Interface de terminal para o player."""
+    """
+    Interface de terminal para o player.
+    
+    Parâmetros:
+    stdscr: A tela padrão do curses.
+    """
     player = MusicPlayer()
 
     if not player.library.songs:
