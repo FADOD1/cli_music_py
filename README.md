@@ -18,3 +18,11 @@ It supports adding songs to a queue and adjusting the volume.
    ```sh
    git clone https://github.com/FADOD1/cli_music_py.git
    cd cli_music_py
+
+
+
+# install requeriments
+
+```sh
+pip install requeriments.txt
+```
