@@ -66,6 +66,9 @@ class MusicPlayer(Playable):
         self.elapsed_time = 0
         self.queue = []  # Initialize the queue
 
+   #  def collect_image():
+
+
     def play(self, index=None):
         """
         Reproduz uma música.
@@ -102,6 +105,9 @@ class MusicPlayer(Playable):
         """
         if 0 <= song_index < len(self.library.songs):
             self.queue.append(self.library.songs[song_index])
+
+    def sound_indicator():
+        print("")
 
     def pause(self):
         """
@@ -179,8 +185,8 @@ class MusicPlayer(Playable):
         """
         return time.strftime('%M:%S', time.gmtime(seconds))
 
-
 def main(stdscr):
+
     """
     Interface de terminal para o player.
     
@@ -217,8 +223,8 @@ def main(stdscr):
         # Informações do player
         elapsed = player.format_time(player.get_elapsed_time())
         stdscr.addstr(15, 2, f"Status: {'▶ Tocando' if player.playing else '⏸ Pausado'}")
-        stdscr.addstr(16, 2, f"Volume -/+: {'█' * int(player.volume * 10)}")
-        stdscr.addstr(17, 2, f"Tempo ⏳: {elapsed}")
+        stdscr.addstr(16, 2, f"Volume 🔊: {'█' * int(player.volume * 10)}")
+        stdscr.addstr(17, 2, f"Tempo  ⏳: {elapsed}")
 
         stdscr.refresh()
 
