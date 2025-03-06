@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLI Music Player Documentation</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --accent-color: #4CAF50;
+            --code-bg: #2d2d2d;
+            --border-color: #3d3d3d;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            color: var(--accent-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        code {
+            background-color: var(--code-bg);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Consolas', monospace;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        a {
+            color: #64B5F6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            background-color: #252525;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .warning code {
+            background-color: #3d3d3d;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .warning strong {
+            color: #4CAF50;
+        }
+
+        .diagram-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+        
+        .diagram-title {
+            color: #4CAF50;
+            margin: 15px 0;
+            font-size: 1.2em;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>🎵 CLI Music Player Documentation</h1>
+    
+    <div class="container">
+        <h2>Overview</h2>
+        <p>A terminal-based music player with the following features:</p>
+        <ul>
+            <li>Play/Pause/Stop controls</li>
+            <li>Volume adjustment</li>
+            <li>Queue system</li>
+            <li>Playlist navigation</li>
+            <li>Time tracking</li>
+        </ul>
+    </div>
+
+    <h2>Requirements</h2>
+    <pre><code>Python 3.6+
+pygame
+curses (included in standard library)</code></pre>
+
+    <h2>Installation</h2>
+    <pre><code>pip install pygame</code></pre>
+
+    <h2>Usage</h2>
+    <pre><code>python player.py</code></pre>
+    <p>Controls:
+        <ul>
+            <li>↑/↓: Navigate playlist</li>
+            <li>Enter: Play selected song</li>
+            <li>Space: Pause/Resume</li>
+            <li>←/→: Previous/Next song</li>
+            <li>+/-: Adjust volume</li>
+            <li>q: Quit</li>
+        </ul>
+    </p>
+
+    <h2>Architecture</h2>
+    <div class="container">
+        <h3>Class Diagram</h3>
+        <div class="diagram-container">
+            <div class="diagram-title">UML Class Diagram</div>
+            <div style="width: 640px; height: 480px; margin: 10px auto; position: relative;">
+                <iframe allowfullscreen frameborder="0" style="width:640px; height:480px" 
+                        src="https://lucid.app/documents/embedded/049408c1-de5e-4db6-9150-c4dc918a9dbb" 
+                        id="7fSY1j~z.6nQ"></iframe>
+            </div>
+        </div>
+
+        <h3>Use Case Diagram</h3>
+        <div class="diagram-container">
+            <div class="diagram-title">User Interaction Flow</div>
+            <div style="width: 640px; height: 480px; margin: 10px auto; position: relative;">
+                <iframe allowfullscreen frameborder="0" style="width:640px; height:480px" 
+                        src="https://lucid.app/documents/embedded/767e186d-b539-4b7b-8f94-557a1c3ccccf" 
+                        id="1hSYI_mcebHW"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <h3>Key Classes</h3>
+    <h4>MusicPlayer</h4>
+    <p>Implements core playback functionality including:</p>
+    <ul>
+        <li>Queue management</li>
+        <li>Volume control</li>
+        <li>Playback state management</li>
+    </ul>
+
+    <h4>MusicLibrary</h4>
+    <p>Manages music files from directory:</p>
+    <pre><code>music_dir/
+    ├── song1.mp3
+    └── song2.mp3</code></pre>
+
+
+    <div class="warning">
+        <h3>⚠️ Important Requirements</h3>
+        <p>Before usage:</p>
+        <ul>
+            <li><strong>Install required packages:</strong> <code>pip install -r requirements.txt</code></li>
+            <li><strong>Create music directory:</strong> <code>mkdir music</code> and add MP3 files</li>
+            <li><strong>Terminal requirements:</strong> Curses-compatible environment (Linux/MacOS recommended)</li>
+        </ul>
+    </div>
+
+    <h2>Repository Structure</h2>
+    <pre><code>project-root/
+    ├── music/           # Music files
+    ├── docs/            # Documentation
+    ├── cli_musicplayerv3.py        # Main script
+    └── requirements.txt # Dependencies</code></pre>
+</body>
+</html>
