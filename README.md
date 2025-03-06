@@ -26,3 +26,9 @@ It supports adding songs to a queue and adjusting the volume.
 ```sh
 pip install requeriments.txt
 ```
+
+# Application documentation 
+
+> Access via this link
+
+https://cli-music-py.vercel.app/
